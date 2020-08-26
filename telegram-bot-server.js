@@ -4,7 +4,7 @@ const {Orders, Categories}  = require('./models')
 const { Telegraf } = require('telegraf')
 const port = process.env.INFOCARD_TELEGRAM_BOT_PORT
 const bot = new Telegraf(process.env.INFOCARD_TELEGRAM_BOT_TOKEN)
-const url = 'https://83fe4973ba3b.ngrok.io'
+const url = 'https://infocardbot.dreamcode.kz'
 const Sequelize = require("sequelize")
 const sequelize = require('./utils/database')
 

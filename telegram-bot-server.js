@@ -5,6 +5,7 @@ const { Telegraf } = require('telegraf')
 const port = process.env.INFOCARD_TELEGRAM_BOT_PORT
 const bot = new Telegraf(process.env.INFOCARD_TELEGRAM_BOT_TOKEN)
 const url = 'https://infocardbot.dreamcode.kz'
+//const url = 'https://2c064e0129bf.ngrok.io'
 const Sequelize = require("sequelize")
 const sequelize = require('./utils/database')
 
@@ -14,7 +15,7 @@ const tlsOptions = {
     cert: fs.readFileSync('infocardbot.dreamcode_kz.crt')
 }
 
-/*sequelize.sync()
+sequelize.sync()
 
 bot.start((ctx) => {
     console.log(555)
@@ -22,10 +23,10 @@ bot.start((ctx) => {
 })
 
 
-
-setInterval(() => {
-    console.log('work')
-}, 1000)
+//
+// setInterval(() => {
+//     console.log('work')
+// }, 1000)
 
 bot.on('text', async ctx => {
 
@@ -89,9 +90,10 @@ bot.on('text', async ctx => {
     }
 
 
-})*/
+})
 
 bot.telegram.setWebhook(`${url}/hook`)
 bot.startWebhook('/hook', tlsOptions, port)
+//bot.startWebhook('/hook', null, port)
 
 

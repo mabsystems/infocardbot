@@ -10,10 +10,7 @@ const sequelize = require('./utils/database')
 
 sequelize.sync()
 
-bot.start((ctx) => {
-    console.log(555)
-    ctx.reply('Отправьте Ваш ИИН ...')
-})
+
 
 const tlsOptions = {
     key: fs.readFileSync('infocardbot.dreamcode.kz_key.key'),
@@ -88,3 +85,8 @@ bot.on('text', async ctx => {
 
 bot.telegram.setWebhook(`${url}/hook`)
 bot.startWebhook('/hook', tlsOptions, port)
+
+bot.start((ctx) => {
+    console.log(555)
+    ctx.reply('Отправьте Ваш ИИН ...')
+})

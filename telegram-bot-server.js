@@ -8,17 +8,20 @@ const url = 'https://infocardbot.dreamcode.kz'
 const Sequelize = require("sequelize")
 const sequelize = require('./utils/database')
 
-sequelize.sync()
+
+const tlsOptions = {
+    key: fs.readFileSync('infocardbot.dreamcode.kz_key.key'),
+    cert: fs.readFileSync('infocardbot.dreamcode_kz.crt')
+}
+
+/*sequelize.sync()
 
 bot.start((ctx) => {
     console.log(555)
     ctx.reply('Отправьте Ваш ИИН ...')
 })
 
-const tlsOptions = {
-    key: fs.readFileSync('infocardbot.dreamcode.kz_key.key'),
-    cert: fs.readFileSync('infocardbot.dreamcode_kz.crt')
-}
+
 
 setInterval(() => {
     console.log('work')
@@ -86,7 +89,7 @@ bot.on('text', async ctx => {
     }
 
 
-})
+})*/
 
 bot.telegram.setWebhook(`${url}/hook`)
 bot.startWebhook('/hook', tlsOptions, port)

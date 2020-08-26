@@ -1,0 +1,32 @@
+{
+  "development": {
+    "username": "alex",
+    "password": "123",
+    "database": "crm",
+    "host": "127.0.0.1",
+    "dialect": "mariadb",
+    "dialectOptions": {
+      "timezone": false
+    },
+    "timezone": "+05:00",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "host": "127.0.0.1",
+    "dialect": "mariadb",
+    "dialectOptions": {
+      "timezone": false
+    },
+    "timezone": "+05:00",
+    "operatorsAliases": false
+  }
+}

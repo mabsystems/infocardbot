@@ -14,6 +14,13 @@ const tlsOptions = {
     cert: fs.readFileSync('infocardbot.dreamcode_kz.crt')
 }
 
+bot.telegram.setWebhook(`${url}/hook`)
+bot.startWebhook('/hook', tlsOptions, port)
+
+bot.start((ctx) => {
+    ctx.reply('Отправьте Ваш ИИН ...')
+})
+
 sequelize.sync()
 
 bot.on('text', async ctx => {
@@ -80,12 +87,6 @@ bot.on('text', async ctx => {
 
 })
 
-bot.telegram.setWebhook(`${url}/hook`)
-bot.startWebhook('/hook', tlsOptions, port)
 
-bot.start((ctx) => {
-    console.log(555)
-    ctx.reply('Отправьте Ваш ИИН ...')
-})
 
 

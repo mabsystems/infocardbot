@@ -1,6 +1,6 @@
 require('dotenv').config()
 const {Orders, Categories}  = require('./models')
-
+const fs = require('fs')
 const { Telegraf } = require('telegraf')
 const port = process.env.INFOCARD_TELEGRAM_BOT_PORT
 const bot = new Telegraf(process.env.INFOCARD_TELEGRAM_BOT_TOKEN)
@@ -13,6 +13,11 @@ sequelize.sync()
 bot.start((ctx) => {
     ctx.reply('Отправьте Ваш ИИН ...')
 })
+
+const tlsOptions = {
+    key: fs.readFileSync('infocardbot.dreamcode.kz_key.key'),
+    cert: fs.readFileSync('infocardbot_dreamcode_kz.crt')
+}
 
 bot.on('text', async ctx => {
 
@@ -79,4 +84,4 @@ bot.on('text', async ctx => {
 })
 
 bot.telegram.setWebhook(`${url}/hook`)
-bot.startWebhook('/hook', null, port)
+bot.startWebhook('/hook', tlsOptions, port)

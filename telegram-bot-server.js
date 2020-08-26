@@ -16,7 +16,7 @@ bot.start((ctx) => {
 
 const tlsOptions = {
     key: fs.readFileSync('infocardbot.dreamcode.kz_key.key'),
-    cert: fs.readFileSync('infocardbot_dreamcode_kz.crt')
+    cert: fs.readFileSync('infocardbot.dreamcode_kz.crt')
 }
 
 console.log(tlsOptions)

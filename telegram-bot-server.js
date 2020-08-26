@@ -11,6 +11,7 @@ const sequelize = require('./utils/database')
 sequelize.sync()
 
 bot.start((ctx) => {
+    console.log(555)
     ctx.reply('Отправьте Ваш ИИН ...')
 })
 

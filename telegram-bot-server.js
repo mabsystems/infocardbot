@@ -19,6 +19,8 @@ const tlsOptions = {
     cert: fs.readFileSync('infocardbot_dreamcode_kz.crt')
 }
 
+console.log(tlsOptions)
+
 bot.on('text', async ctx => {
 
     const text = ctx.message.text.trim()

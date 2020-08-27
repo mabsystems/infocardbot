@@ -1,24 +1,37 @@
 require('dotenv').config()
-const {Orders, Categories}  = require('./models')
+const {Orders, Categories, TelegramBotStatistics}  = require('./models')
 const fs = require('fs')
 const { Telegraf } = require('telegraf')
 const port = process.env.INFOCARD_TELEGRAM_BOT_PORT
 const bot = new Telegraf(process.env.INFOCARD_TELEGRAM_BOT_TOKEN)
-const url = 'https://infocardbot.dreamcode.kz'
 const Sequelize = require("sequelize")
 const sequelize = require('./utils/database')
+const env = process.env.NODE_ENV || 'development'
 
-
-const tlsOptions = {
-    key: fs.readFileSync('infocardbot.dreamcode.kz_key.key'),
-    cert: fs.readFileSync('infocardbot.dreamcode_kz.crt')
+let url
+let tlsOptions
+if (env !== 'development') {
+    url = 'https://infocardbot.dreamcode.kz'
+    tlsOptions = {
+        key: fs.readFileSync('infocardbot.dreamcode.kz_key.key'),
+        cert: fs.readFileSync('infocardbot.dreamcode_kz.crt')
+    }
+} else {
+    url = 'https://e82ae3253fcd.ngrok.io'
+    tlsOptions = null
 }
 
 bot.telegram.setWebhook(`${url}/hook`)
 bot.startWebhook('/hook', tlsOptions, port)
 
-bot.start((ctx) => {
-    ctx.reply('Отправьте Ваш ИИН ...')
+bot.start(async (ctx) => {
+
+    await TelegramBotStatistics.create({
+        name: ctx.message.from.first_name,
+        telegramID: ctx.message.from.username,
+        method: 'start'
+    })
+    await ctx.reply('Отправьте Ваш ИИН ...')
 })
 
 sequelize.sync()
@@ -27,7 +40,14 @@ bot.on('text', async ctx => {
 
     const text = ctx.message.text.trim()
 
-    if (!isNaN(text) && text.length === 12) {
+    if (!isNaN(+text) && text.length === 12) {
+
+        await TelegramBotStatistics.create({
+            name: ctx.message.from.first_name,
+            telegramID: ctx.message.from.username,
+            method: 'info',
+            iin: text
+        })
 
         const o = await Orders.findOne({
             attributes: ['name','lastname', 'iin', 'status', 'numeration'],
